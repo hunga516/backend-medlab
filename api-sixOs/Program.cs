@@ -8,12 +8,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApiContext>
     (opt => opt.UseInMemoryDatabase("SixOsDb"));
 
+// Addi CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()   // Cho phép bất kỳ origin nào
+            .AllowAnyMethod()   // Cho phép tất cả các phương thức (GET, POST, PUT, DELETE,...)
+            .AllowAnyHeader();  // Cho phép tất cả các header
+    });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Using CORS
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

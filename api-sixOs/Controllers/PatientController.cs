@@ -5,7 +5,7 @@ using api_sixOs.Data;
 
 namespace api_sixOs.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PatientController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace api_sixOs.Controllers
 
         //Create
         [HttpPost]
-        public JsonResult Create(Patient patient)
+        public JsonResult Create([FromForm] Patient patient)
         {
             _context.Patients.Add(patient);
 
