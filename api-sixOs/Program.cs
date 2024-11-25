@@ -5,8 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<ApiContext>
-    (opt => opt.UseInMemoryDatabase("SixOsDb"));
+builder.Services.AddDbContext<ApiContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // Addi CORS
 builder.Services.AddCors(options =>
