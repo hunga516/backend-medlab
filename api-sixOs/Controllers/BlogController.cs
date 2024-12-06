@@ -16,20 +16,43 @@ namespace api_sixOs.Controllers
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        // Create
         [HttpPost]
-        public IActionResult Create([FromForm] Blogs blog)
+        public async Task<IActionResult> Create([FromForm] Blogs blog, IFormFile? image)
         {
             if (blog == null || string.IsNullOrEmpty(blog.Title) || string.IsNullOrEmpty(blog.Content))
             {
                 return BadRequest("Invalid blog data.");
             }
 
+            if (image != null)
+            {
+                // Ensure the directory exists
+                string directoryPath = Path.Combine("wwwroot", "images");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath); // Creates the directory if it doesn't exist
+                }
+
+                // Create a safe file name
+                string fileName = Path.GetFileName(image.FileName);
+                string sanitizedFileName = Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.Ticks + Path.GetExtension(fileName);
+                string filePath = Path.Combine(directoryPath, sanitizedFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream); // Copy the file asynchronously
+                }
+
+                blog.Img = filePath; // Save the image path in the database
+            }
+
             _context.Blogs.Add(blog);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();  // Save changes asynchronously
 
             return CreatedAtAction(nameof(Read), new { id = blog.Id }, blog);
         }
+
+
 
         // Read
         [HttpGet]
