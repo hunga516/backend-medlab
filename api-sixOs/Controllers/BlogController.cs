@@ -44,7 +44,7 @@ namespace api_sixOs.Controllers
                 }
 
                 // Save the relative path in the database
-                blog.Img = $"/images/{sanitizedFileName}"; // Use relative path to the images directory
+                blog.Img = $"images/{sanitizedFileName}"; // Use relative path to the images directory
             }
 
             _context.Blogs.Add(blog);
