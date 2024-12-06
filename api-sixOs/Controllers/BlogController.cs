@@ -43,7 +43,8 @@ namespace api_sixOs.Controllers
                     await image.CopyToAsync(fileStream); // Copy the file asynchronously
                 }
 
-                blog.Img = filePath; // Save the image path in the database
+                // Save the relative path in the database
+                blog.Img = $"/images/{sanitizedFileName}"; // Use relative path to the images directory
             }
 
             _context.Blogs.Add(blog);
@@ -51,6 +52,7 @@ namespace api_sixOs.Controllers
 
             return CreatedAtAction(nameof(Read), new { id = blog.Id }, blog);
         }
+
 
 
 
