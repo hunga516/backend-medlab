@@ -74,5 +74,41 @@ namespace api_sixOs.Controllers
 
             return Ok($"Blog with Id {id} deleted successfully.");
         }
+        
+        // Get Detail id
+        [HttpGet("{id}")]
+        public IActionResult GetDetail(int id)
+        {
+            var blog = _context.Blogs.FirstOrDefault(p => p.Id == id);
+            if (blog == null)
+            {
+                return NotFound($"Blog with Id {id} not found.");
+            }
+
+            return Ok(blog);
+        }
+        
+        // Get Detail title
+        [HttpGet("{title}")]
+        public IActionResult GetDetail(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return BadRequest("Title cannot be empty.");
+            }
+
+            var blog = _context.Blogs
+                .FirstOrDefault(p => p.Title.ToLower() == title.ToLower());
+    
+            if (blog == null)
+            {
+                return NotFound($"Blog with title '{title}' not found.");
+            }
+
+            return Ok(blog);
+        }
+
+
+
     }
 }

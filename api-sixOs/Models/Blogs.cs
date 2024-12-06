@@ -6,5 +6,5 @@ public class Blogs
     public string Title { get; set; }
     public string Content { get; set; }
     public DateOnly CreatedAt { get; set; }
-    public string Img { get; set; }
+    public string? Img { get; set; }
 }

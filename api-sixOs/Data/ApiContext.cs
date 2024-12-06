@@ -11,12 +11,15 @@ namespace api_sixOs.Data
         
         public DbSet<Blogs> Blogs { get; set; }
         
+        public DbSet<Service> Service { get; set; }
+        
         public ApiContext(DbContextOptions<ApiContext> options)
             :base(options)
         { 
              
         }
-        
+       
+
         
     }
 }
