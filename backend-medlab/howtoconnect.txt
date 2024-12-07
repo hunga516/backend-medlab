@@ -1,0 +1,4 @@
+﻿window:
+"DefaultConnection": "Server=localhost;Database=MedlabDb;Trusted_Connection=True;TrustServerCertificate=True;"
+mac:
+   "DefaultConnection": "Server=localhost,1433;Database=SixOsDb;User Id=sa;Password=123456aA@$;TrustServerCertificate=True;"
