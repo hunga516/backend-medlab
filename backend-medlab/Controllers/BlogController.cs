@@ -55,10 +55,8 @@ namespace api_sixOs.Controllers
         [HttpGet]
         public IActionResult Read(int page = 1, int pageSize = 10, string? title = null, string? category = null)
         {
-            // Bắt đầu với query ban đầu
             var query = _context.Blogs.AsQueryable();
 
-            // Thêm các bộ lọc nếu có
             if (!string.IsNullOrEmpty(title))
             {
                 query = query.Where(b => b.Title.Contains(title));  // Tìm kiếm theo title
@@ -69,10 +67,8 @@ namespace api_sixOs.Controllers
                 query = query.Where(b => b.Category.Contains(category));  // Tìm kiếm theo category
             }
 
-            // Tính tổng số blog
             var totalBlogs = query.Count();
 
-            // Áp dụng phân trang
             if (pageSize > 0)
             {
                 query = query.Skip((page - 1) * pageSize).Take(pageSize);
@@ -80,7 +76,6 @@ namespace api_sixOs.Controllers
 
             var blogs = query.ToList();
 
-            // Tạo response
             var response = new
             {
                 Blogs = blogs,
@@ -98,7 +93,6 @@ namespace api_sixOs.Controllers
         [HttpPut("{id}")]
 public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
 {
-    // Tìm blog theo id
     var existingBlog = await _context.Blogs.FirstOrDefaultAsync(p => p.Id == id);
     
     if (existingBlog == null)
@@ -106,11 +100,9 @@ public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
         return NotFound($"Blog with Id {id} not found.");
     }
 
-    // Cập nhật các trường nếu có giá trị không null
     existingBlog.Title = !string.IsNullOrEmpty(blog.Title) ? blog.Title : existingBlog.Title;
     existingBlog.Content = !string.IsNullOrEmpty(blog.Content) ? blog.Content : existingBlog.Content;
 
-    // Kiểm tra nếu có file ảnh mới thì lưu lại ảnh mới
     if (blog.ImageFile != null)
     {
         string directoryPath = Path.Combine("wwwroot", "images");
@@ -119,17 +111,15 @@ public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
             Directory.CreateDirectory(directoryPath);
         }
 
-        // Xóa ảnh cũ nếu có (tuỳ vào yêu cầu bạn có thể giữ lại hoặc xóa)
         if (!string.IsNullOrEmpty(existingBlog.Img))
         {
             var oldImagePath = Path.Combine("wwwroot", existingBlog.Img.TrimStart('/'));
             if (System.IO.File.Exists(oldImagePath))
             {
-                System.IO.File.Delete(oldImagePath); // Xóa ảnh cũ nếu có
+                System.IO.File.Delete(oldImagePath);
             }
         }
 
-        // Tạo tên file mới và lưu vào thư mục
         string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName)
                           + "_" + DateTime.Now.Ticks + Path.GetExtension(blog.ImageFile.FileName);
         string filePath = Path.Combine(directoryPath, fileName);
@@ -139,15 +129,12 @@ public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
             await blog.ImageFile.CopyToAsync(fileStream);
         }
 
-        // Cập nhật đường dẫn ảnh vào blog
         existingBlog.Img = $"/images/{fileName}";
     }
 
-    // Cập nhật các trường khác nếu cần
     existingBlog.Category = !string.IsNullOrEmpty(blog.Category) ? blog.Category : existingBlog.Category;
     existingBlog.CreatedAt = blog.CreatedAt != default ? blog.CreatedAt : existingBlog.CreatedAt;
 
-    // Lưu thay đổi vào cơ sở dữ liệu
     await _context.SaveChangesAsync();
 
     return Ok(existingBlog);
@@ -183,28 +170,5 @@ public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
 
             return Ok(blog);
         }
-        
-        // Get Detail title
-        [HttpGet("{title}")]
-        public IActionResult GetDetail(string title)
-        {
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                return BadRequest("Title cannot be empty.");
-            }
-
-            var blog = _context.Blogs
-                .FirstOrDefault(p => p.Title.ToLower() == title.ToLower());
-    
-            if (blog == null)
-            {
-                return NotFound($"Blog with title '{title}' not found.");
-            }
-
-            return Ok(blog);
-        }
-
-
-
     }
 }
