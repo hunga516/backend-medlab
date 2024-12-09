@@ -19,12 +19,14 @@ namespace api_sixOs.Controllers
 
         //Create
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] Blogs blog)
+        public async Task<IActionResult> Create([FromForm] Blogs blog, [FromQuery] bool isDraft = false)
         {
             if (blog == null || string.IsNullOrEmpty(blog.Title) || string.IsNullOrEmpty(blog.Content))
             {
                 return BadRequest("Invalid blog data.");
             }
+
+            blog.Status = isDraft ? "Bản nháp" : "";
 
             if (blog.ImageFile != null)
             {
@@ -53,18 +55,30 @@ namespace api_sixOs.Controllers
         }
         
         [HttpGet]
-        public IActionResult Read(int page = 1, int pageSize = 10, string? title = null, string? category = null)
+        public IActionResult Read(int page = 1, int pageSize = 10, string? title = null, string? category = null, string? status = null)
         {
             var query = _context.Blogs.AsQueryable();
 
             if (!string.IsNullOrEmpty(title))
             {
-                query = query.Where(b => b.Title.Contains(title));  // Tìm kiếm theo title
+                query = query.Where(b => b.Title.Contains(title));  
             }
 
             if (!string.IsNullOrEmpty(category))
             {
-                query = query.Where(b => b.Category.Contains(category));  // Tìm kiếm theo category
+                query = query.Where(b => b.Category.Contains(category)); 
+            }
+            
+            if (!string.IsNullOrEmpty(status))
+            {
+                if (status == "draft")
+                {
+                    query = query.Where(b => b.Status == "Bản nháp");
+                }
+                else if (status == "published")
+                {
+                    query = query.Where(b => b.Status == "");
+                }
             }
 
             var totalBlogs = query.Count();
@@ -88,57 +102,66 @@ namespace api_sixOs.Controllers
         }
 
 
-
-        // Update
+        //Update
         [HttpPut("{id}")]
-public async Task<IActionResult> Update(int id, [FromForm] Blogs blog)
-{
-    var existingBlog = await _context.Blogs.FirstOrDefaultAsync(p => p.Id == id);
-    
-    if (existingBlog == null)
-    {
-        return NotFound($"Blog with Id {id} not found.");
-    }
-
-    existingBlog.Title = !string.IsNullOrEmpty(blog.Title) ? blog.Title : existingBlog.Title;
-    existingBlog.Content = !string.IsNullOrEmpty(blog.Content) ? blog.Content : existingBlog.Content;
-
-    if (blog.ImageFile != null)
-    {
-        string directoryPath = Path.Combine("wwwroot", "images");
-        if (!Directory.Exists(directoryPath))
+        public async Task<IActionResult> Update(int id, [FromForm] Blogs blog, [FromQuery] bool isDraft = false)
         {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        if (!string.IsNullOrEmpty(existingBlog.Img))
-        {
-            var oldImagePath = Path.Combine("wwwroot", existingBlog.Img.TrimStart('/'));
-            if (System.IO.File.Exists(oldImagePath))
+            var existingBlog = await _context.Blogs.FirstOrDefaultAsync(p => p.Id == id);
+            
+            if (existingBlog == null)
             {
-                System.IO.File.Delete(oldImagePath);
+                return NotFound($"Blog with Id {id} not found.");
             }
+
+            existingBlog.Title = !string.IsNullOrEmpty(blog.Title) ? blog.Title : existingBlog.Title;
+            existingBlog.Content = !string.IsNullOrEmpty(blog.Content) ? blog.Content : existingBlog.Content;
+
+            if (blog.ImageFile != null)
+            {
+                string directoryPath = Path.Combine("wwwroot", "images");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                if (!string.IsNullOrEmpty(existingBlog.Img))
+                {
+                    var oldImagePath = Path.Combine("wwwroot", existingBlog.Img.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName)
+                                  + "_" + DateTime.Now.Ticks + Path.GetExtension(blog.ImageFile.FileName);
+                string filePath = Path.Combine(directoryPath, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await blog.ImageFile.CopyToAsync(fileStream);
+                }
+
+                existingBlog.Img = $"/images/{fileName}";
+            }
+
+            existingBlog.Category = !string.IsNullOrEmpty(blog.Category) ? blog.Category : existingBlog.Category;
+            existingBlog.CreatedAt = blog.CreatedAt != default ? blog.CreatedAt : existingBlog.CreatedAt;
+
+            if (isDraft)
+            {
+                existingBlog.Status = "Bản nháp"; 
+            }
+            else
+            {
+                existingBlog.Status = !string.IsNullOrEmpty(blog.Status) ? blog.Status : "";
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(existingBlog);
         }
 
-        string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName)
-                          + "_" + DateTime.Now.Ticks + Path.GetExtension(blog.ImageFile.FileName);
-        string filePath = Path.Combine(directoryPath, fileName);
-
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        {
-            await blog.ImageFile.CopyToAsync(fileStream);
-        }
-
-        existingBlog.Img = $"/images/{fileName}";
-    }
-
-    existingBlog.Category = !string.IsNullOrEmpty(blog.Category) ? blog.Category : existingBlog.Category;
-    existingBlog.CreatedAt = blog.CreatedAt != default ? blog.CreatedAt : existingBlog.CreatedAt;
-
-    await _context.SaveChangesAsync();
-
-    return Ok(existingBlog);
-}
 
 
 

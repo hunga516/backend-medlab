@@ -13,6 +13,8 @@ public class Blogs
 
     public int ViewCount { get; set; } = 0;
     
+    public string? Status { get; set; } = "";
+    
     public DateOnly CreatedAt { get; set; }
     [NotMapped] 
     public IFormFile? ImageFile { get; set; } 
