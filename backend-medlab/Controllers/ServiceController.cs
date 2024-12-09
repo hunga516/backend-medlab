@@ -18,32 +18,59 @@ namespace api_sixOs.Controllers
 
         // Create
         [HttpPost]
-        public IActionResult Create([FromBody] List<Service> services)
+        public IActionResult Create([FromForm] Service service)
         {
-            if (services == null || !services.Any() || services.Any(s => string.IsNullOrEmpty(s.ServiceName) || string.IsNullOrEmpty(s.ServiceGroup) ))
+            if (service == null || string.IsNullOrEmpty(service.ServiceName) || string.IsNullOrEmpty(service.ServiceGroup))
             {
                 return BadRequest("Invalid service data. All fdsdadsdields must be provided for each service.");
             }
 
-            // Thêm tất cả các dịch vụ vào cơ sở dữ liệu
-            _context.Service.AddRange(services);
+            _context.Service.Add(service);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetDetail), new { id = services.First().Id }, services);
+            return Ok();
         }
 
 
         // Read (Get all services)
         [HttpGet]
-        public IActionResult Read()
+        public IActionResult Read(int page = 1, int pageSize = 10, string? ServiceName = null, string? ServiceGroup = null)
         {
-            var services = _context.Service.ToList();
-            return Ok(services);
+            var query = _context.Service.AsQueryable();
+
+            if (!string.IsNullOrEmpty(ServiceName))
+            {
+                query = query.Where(b => b.ServiceName.Contains(ServiceName));  // Tìm kiếm theo ServiceName
+            }
+
+            if (!string.IsNullOrEmpty(ServiceGroup))
+            {
+                query = query.Where(b => b.ServiceGroup.Contains(ServiceGroup));  // Tìm kiếm theo ServiceGroup
+            }
+
+            var totalServices = query.Count();
+
+            if (pageSize > 0)
+            {
+                query = query.Skip((page - 1) * pageSize).Take(pageSize);
+            }
+
+            var blogs = query.ToList();
+
+            var response = new
+            {
+                Services = blogs,
+                TotalServices = totalServices,
+                TotalPages = pageSize > 0 ? (int)Math.Ceiling((double)totalServices / pageSize) : 1,
+                CurrentPage = pageSize > 0 ? page : 1
+            };
+
+            return Ok(response);
         }
 
         // Update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Service service)
+        public IActionResult Update(int id, [FromForm] Service service)
         {
             var existingService = _context.Service.FirstOrDefault(p => p.Id == id);
             if (existingService == null)
