@@ -80,6 +80,8 @@ namespace api_sixOs.Controllers
                     query = query.Where(b => b.Status == "");
                 }
             }
+            
+            query = query.OrderByDescending(b => b.Id);
 
             var totalBlogs = query.Count();
 

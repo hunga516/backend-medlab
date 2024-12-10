@@ -47,6 +47,8 @@ namespace api_sixOs.Controllers
             {
                 query = query.Where(b => b.ServiceGroup.Contains(ServiceGroup));  // Tìm kiếm theo ServiceGroup
             }
+            
+            query = query.OrderByDescending(b => b.Id);
 
             var totalServices = query.Count();
 
@@ -54,6 +56,8 @@ namespace api_sixOs.Controllers
             {
                 query = query.Skip((page - 1) * pageSize).Take(pageSize);
             }
+            
+          
 
             var blogs = query.ToList();
 
