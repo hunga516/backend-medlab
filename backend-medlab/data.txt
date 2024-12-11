@@ -1,0 +1,182 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Blogs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](255) NULL,
+	[Content] [nvarchar](max) NULL,
+	[CreatedAt] [date] NULL,
+	[Img] [nvarchar](255) NULL,
+	[Category] [nvarchar](255) NULL,
+	[ViewCount] [int] NULL,
+	[Status] [nvarchar](255) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Blogs] ADD  CONSTRAINT [PK_Blogs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Service](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ServiceName] [nvarchar](255) NULL,
+	[ServiceGroup] [nvarchar](255) NULL,
+	[ServiceUnit] [nvarchar](255) NULL,
+	[CreatedAt] [date] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Service] ADD  CONSTRAINT [PK_Service] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+====== DATA ======
+
+--create table [#tempBlogs] (
+--[Id] [int] identity,
+--[Title] [nvarchar] (255) NULL,
+--[Content] [nvarchar] (max) NULL,
+--[CreatedAt] [date] NULL,
+--[Img] [nvarchar] (255) NULL,
+--[Category] [nvarchar] (255) NULL,
+--[ViewCount] [int] NULL,
+--[Status] [nvarchar] (255) NULL);
+
+
+
+set identity_insert [#tempBlogs] on;
+
+
+insert [#tempBlogs] ([Id],[Title],[Content],[CreatedAt],[Img],[Category],[ViewCount],[Status])
+select 11,N'Phòng xét nghiệm y khoa',N'<p dir="ltr" style="text-align: justify;"><strong>C&aacute;nh tay phải đắc lực của hệ thống y tế</strong></p>
+<p dir="ltr" style="text-align: justify;">Trong hệ thống chăm s&oacute;c sức khỏe hiện đại, ph&ograve;ng x&eacute;t nghiệm y khoa đ&oacute;ng vai tr&ograve; trung t&acirc;m, gi&uacute;p c&aacute;c b&aacute;c sĩ chẩn đo&aacute;n ch&iacute;nh x&aacute;c v&agrave; đưa ra ph&aacute;c đồ điều trị hiệu quả. Theo thống k&ecirc; của Tổ chức Y tế Thế giới (WHO), hơn 70% c&aacute;c quyết định y khoa dựa tr&ecirc;n kết quả x&eacute;t nghiệm. Điều n&agrave;y cho thấy sự phụ thuộc ng&agrave;y c&agrave;ng lớn v&agrave;o c&aacute;c ph&ograve;ng x&eacute;t nghiệm chất lượng cao để đảm bảo sức khỏe cộng đồng.</p>
+<p dir="ltr" style="text-align: justify;">C&aacute;c x&eacute;t nghiệm m&aacute;u, nước tiểu, hoặc sinh học ph&acirc;n tử đ&atilde; trở th&agrave;nh một phần kh&ocirc;ng thể thiếu trong việc ph&aacute;t hiện sớm c&aacute;c bệnh l&yacute; nguy hiểm như ung thư, bệnh tim mạch, hoặc c&aacute;c rối loạn nội tiết. Một nghi&ecirc;n cứu gần đ&acirc;y tại Việt Nam chỉ ra rằng, việc ph&aacute;t hiện sớm bệnh tiểu đường th&ocirc;ng qua x&eacute;t nghiệm định kỳ gi&uacute;p giảm 40% nguy cơ biến chứng nghi&ecirc;m trọng.</p>
+<p dir="ltr" style="text-align: justify;">Ngo&agrave;i việc chẩn đo&aacute;n, ph&ograve;ng x&eacute;t nghiệm c&ograve;n đ&oacute;ng vai tr&ograve; theo d&otilde;i t&igrave;nh trạng sức khỏe của bệnh nh&acirc;n trong suốt qu&aacute; tr&igrave;nh điều trị. Những th&ocirc;ng tin chi tiết từ c&aacute;c x&eacute;t nghiệm thường xuy&ecirc;n gi&uacute;p b&aacute;c sĩ điều chỉnh liệu ph&aacute;p một c&aacute;ch ch&iacute;nh x&aacute;c v&agrave; kịp thời. Tiến sĩ Nguyễn Văn Hải, chuy&ecirc;n gia x&eacute;t nghiệm tại Bệnh viện Bạch Mai, nhận định: &ldquo;Một ph&ograve;ng x&eacute;t nghiệm chất lượng kh&ocirc;ng chỉ l&agrave; nơi cung cấp kết quả, m&agrave; c&ograve;n l&agrave; đối t&aacute;c quan trọng trong qu&aacute; tr&igrave;nh điều trị.&rdquo;</p>
+<p dir="ltr" style="text-align: justify;">Tuy nhi&ecirc;n, người d&acirc;n cần đặc biệt lưu &yacute; lựa chọn ph&ograve;ng x&eacute;t nghiệm uy t&iacute;n. Những cơ sở được trang bị c&ocirc;ng nghệ ti&ecirc;n tiến v&agrave; tu&acirc;n thủ c&aacute;c ti&ecirc;u chuẩn quốc tế như ISO 15189 sẽ mang lại sự an t&acirc;m. Đ&acirc;y cũng l&agrave; xu hướng ph&aacute;t triển của c&aacute;c ph&ograve;ng x&eacute;t nghiệm y khoa tại Việt Nam, khi ng&agrave;y c&agrave;ng nhiều bệnh viện đầu tư v&agrave;o hệ thống tự động h&oacute;a v&agrave; t&iacute;ch hợp c&ocirc;ng nghệ tr&iacute; tuệ nh&acirc;n tạo (AI).</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/pngtree-medical-icon-simple-banner-background-picture-image_1539751_638693392811961190.jpg',N'Y tế',0,N'' UNION ALL
+select 12,N' Xét nghiệm định kỳ',N'<p dir="ltr" style="text-align: justify;"><strong id="docs-internal-guid-84339df7-7fff-a9ca-e802-a988e2d1d4f3">B&iacute; quyết sống khỏe trong cuộc sống hiện đại</strong></p>
+<p dir="ltr" style="text-align: justify;"><br>Cuộc sống hiện đại với nhiều &aacute;p lực c&ocirc;ng việc v&agrave; th&oacute;i quen kh&ocirc;ng l&agrave;nh mạnh khiến sức khỏe con người dễ bị ảnh hưởng. V&igrave; vậy, x&eacute;t nghiệm định kỳ trở th&agrave;nh một trong những phương ph&aacute;p bảo vệ sức khỏe hiệu quả nhất. C&aacute;c chuy&ecirc;n gia khuyến c&aacute;o, x&eacute;t nghiệm m&aacute;u v&agrave; chức năng cơ thể n&ecirc;n được thực hiện mỗi năm &iacute;t nhất một lần để ph&aacute;t hiện sớm c&aacute;c bất thường.</p>
+<p dir="ltr" style="text-align: justify;">Một trường hợp điển h&igrave;nh l&agrave; anh Nguyễn Ho&agrave;ng Nam, 45 tuổi, sống tại TP.HCM. Trong lần kiểm tra sức khỏe định kỳ gần đ&acirc;y, anh ph&aacute;t hiện m&igrave;nh c&oacute; dấu hiệu tăng cholesterol v&agrave; nguy cơ bệnh tim mạch. &ldquo;T&ocirc;i ho&agrave;n to&agrave;n bất ngờ v&igrave; trước giờ thấy m&igrave;nh khỏe mạnh. Nhưng nhờ x&eacute;t nghiệm định kỳ, t&ocirc;i kịp thời thay đổi chế độ ăn uống v&agrave; tập luyện để giảm nguy cơ.&rdquo;</p>
+<p dir="ltr" style="text-align: justify;">Ngo&agrave;i ra, x&eacute;t nghiệm định kỳ c&ograve;n gi&uacute;p tầm so&aacute;t c&aacute;c bệnh l&yacute; nguy hiểm như ung thư gan, tiểu đường, hoặc suy thận. Những ph&aacute;t hiện sớm n&agrave;y gi&uacute;p giảm đ&aacute;ng kể chi ph&iacute; điều trị v&agrave; tăng hiệu quả phục hồi.</p>
+<p dir="ltr" style="text-align: justify;">B&ecirc;n cạnh đ&oacute;, c&aacute;c ph&ograve;ng x&eacute;t nghiệm hiện đại c&ograve;n cung cấp g&oacute;i x&eacute;t nghiệm c&aacute; nh&acirc;n h&oacute;a, ph&ugrave; hợp với từng độ tuổi v&agrave; giới t&iacute;nh. Điều n&agrave;y gi&uacute;p mọi người quản l&yacute; sức khỏe dễ d&agrave;ng hơn, từ đ&oacute; x&acirc;y dựng lối sống khoa học v&agrave; l&agrave;nh mạnh.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/kham-suc-khoe-dinh-ky(2)_638693389236176860.jpg',N'Y tế',0,N'' UNION ALL
+select 13,N'Công nghệ mới trong xét nghiệm',N'<p dir="ltr" style="text-align: justify;"><strong id="docs-internal-guid-f2799df2-7fff-abbb-9a35-79e53c8cdd23">Thay đổi c&aacute;ch ch&uacute;ng ta chăm s&oacute;c sức khỏe </strong><br><br>Sự tiến bộ của c&ocirc;ng nghệ đang thay đổi to&agrave;n diện lĩnh vực x&eacute;t nghiệm y khoa. Tr&iacute; tuệ nh&acirc;n tạo (AI) v&agrave; dữ liệu lớn (Big Data) được t&iacute;ch hợp v&agrave;o hệ thống x&eacute;t nghiệm, gi&uacute;p ph&acirc;n t&iacute;ch mẫu nhanh hơn, ch&iacute;nh x&aacute;c hơn v&agrave; giảm thiểu sai s&oacute;t.</p>
+<p dir="ltr" style="text-align: justify;">Chẳng hạn, c&aacute;c x&eacute;t nghiệm sinh học ph&acirc;n tử giờ đ&acirc;y c&oacute; thể x&aacute;c định đột biến gene hoặc dấu hiệu bất thường chỉ trong v&ograve;ng v&agrave;i giờ, thay v&igrave; v&agrave;i ng&agrave;y như trước đ&acirc;y. Điều n&agrave;y kh&ocirc;ng chỉ gi&uacute;p b&aacute;c sĩ đưa ra ph&aacute;c đồ điều trị nhanh ch&oacute;ng m&agrave; c&ograve;n tăng hiệu quả điều trị.</p>
+<p dir="ltr" style="text-align: justify;">Theo một b&aacute;o c&aacute;o của Bộ Y tế, c&aacute;c c&ocirc;ng nghệ x&eacute;t nghiệm ti&ecirc;n tiến đ&atilde; gi&uacute;p giảm 30% thời gian chờ đợi kết quả, cải thiện đ&aacute;ng kể trải nghiệm của bệnh nh&acirc;n. Tiến sĩ Trần Anh Dũng nhận định: &ldquo;Tương lai của y học ch&iacute;nh x&aacute;c sẽ dựa v&agrave;o c&ocirc;ng nghệ x&eacute;t nghiệm hiện đại, nơi mỗi c&aacute; nh&acirc;n được chăm s&oacute;c dựa tr&ecirc;n đặc điểm sinh học ri&ecirc;ng biệt.&rdquo;</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/thiet-bi-theo-doi-suc-khoe-2512023_638693389853917170.jpg',N'Công nghệ',0,N'' UNION ALL
+select 14,N'Làm thế nào để lựa chọn phòng xét nghiệm y khoa uy tín ?',N'<p dir="ltr" style="text-align: justify;">Việc lựa chọn ph&ograve;ng x&eacute;t nghiệm y khoa uy t&iacute;n kh&ocirc;ng chỉ đảm bảo chất lượng x&eacute;t nghiệm m&agrave; c&ograve;n ảnh hưởng trực tiếp đến kết quả điều trị của bệnh nh&acirc;n. Một ph&ograve;ng x&eacute;t nghiệm chất lượng cao kh&ocirc;ng chỉ cung cấp c&aacute;c kết quả ch&iacute;nh x&aacute;c m&agrave; c&ograve;n đảm bảo quy tr&igrave;nh thực hiện x&eacute;t nghiệm được tiến h&agrave;nh trong m&ocirc;i trường kiểm so&aacute;t chất lượng chặt chẽ, gi&uacute;p bệnh nh&acirc;n y&ecirc;n t&acirc;m hơn trong việc điều trị v&agrave; ph&ograve;ng ngừa bệnh tật. Do đ&oacute;, việc t&igrave;m kiếm một địa chỉ x&eacute;t nghiệm uy t&iacute;n l&agrave; một yếu tố quan trọng m&agrave; mọi người d&acirc;n cần lưu &yacute;.</p>
+<p dir="ltr" style="text-align: justify;">Trước hết, người d&acirc;n n&ecirc;n ưu ti&ecirc;n lựa chọn c&aacute;c ph&ograve;ng x&eacute;t nghiệm được cấp ph&eacute;p hoạt động bởi Bộ Y tế. C&aacute;c ph&ograve;ng x&eacute;t nghiệm n&agrave;y phải đ&aacute;p ứng c&aacute;c ti&ecirc;u chuẩn v&agrave; quy định nghi&ecirc;m ngặt về y tế, đảm bảo c&aacute;c dịch vụ x&eacute;t nghiệm lu&ocirc;n đạt chất lượng cao v&agrave; an to&agrave;n cho người sử dụng. Ph&ograve;ng x&eacute;t nghiệm đạt chuẩn quốc gia thường được kiểm tra, gi&aacute;m s&aacute;t định kỳ v&agrave; c&oacute; c&aacute;c biện ph&aacute;p ph&ograve;ng ngừa rủi ro nghi&ecirc;m ngặt để đảm bảo kết quả x&eacute;t nghiệm ch&iacute;nh x&aacute;c.</p>
+<p dir="ltr" style="text-align: justify;">Ngo&agrave;i ra, c&aacute;c ph&ograve;ng x&eacute;t nghiệm quốc tế được chứng nhận bởi c&aacute;c tổ chức uy t&iacute;n như ISO 15189 hay CAP (College of American Pathologists) cũng l&agrave; một lựa chọn đ&aacute;ng tin cậy. C&aacute;c chứng nhận n&agrave;y kh&ocirc;ng chỉ đảm bảo chất lượng thiết bị m&agrave; c&ograve;n chứng minh rằng ph&ograve;ng x&eacute;t nghiệm đ&oacute; c&oacute; quy tr&igrave;nh l&agrave;m việc khoa học v&agrave; chuy&ecirc;n nghiệp, được quốc tế c&ocirc;ng nhận. Việc sở hữu chứng chỉ ISO 15189 cho thấy ph&ograve;ng x&eacute;t nghiệm đ&atilde; tu&acirc;n thủ c&aacute;c ti&ecirc;u chuẩn quốc tế về chất lượng, từ việc bảo mật th&ocirc;ng tin bệnh nh&acirc;n đến việc kiểm tra chất lượng mẫu x&eacute;t nghiệm.</p>
+<p dir="ltr" style="text-align: justify;">B&ecirc;n cạnh đ&oacute;, một ph&ograve;ng x&eacute;t nghiệm uy t&iacute;n phải c&oacute; đội ngũ b&aacute;c sĩ, chuy&ecirc;n gia v&agrave; kỹ thuật vi&ecirc;n được đ&agrave;o tạo b&agrave;i bản v&agrave; c&oacute; kinh nghiệm trong việc thực hiện c&aacute;c x&eacute;t nghiệm chuy&ecirc;n s&acirc;u. Những chuy&ecirc;n gia n&agrave;y sẽ gi&uacute;p giải th&iacute;ch r&otilde; r&agrave;ng c&aacute;c kết quả x&eacute;t nghiệm, cũng như đưa ra những lời khuy&ecirc;n cần thiết về kế hoạch điều trị. Sự tận t&acirc;m v&agrave; khả năng chuy&ecirc;n m&ocirc;n của đội ngũ nh&acirc;n vi&ecirc;n l&agrave; yếu tố kh&ocirc;ng thể thiếu để mang lại sự h&agrave;i l&ograve;ng v&agrave; tin tưởng cho người bệnh.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/The-nao-la-mot-phong-kham-nam-khoa-uy-tin_638693390225631060.jpg',N'Y tế',0,N'' UNION ALL
+select 15,N'Phát hiện sớm bệnh mãn tính nhờ xét nghiệm y khoa hiện đại',N'<p dir="ltr" style="text-align: justify;">Bệnh m&atilde;n t&iacute;nh như tiểu đường, cao huyết &aacute;p, v&agrave; mỡ m&aacute;u cao ng&agrave;y c&agrave;ng trở th&agrave;nh mối lo ngại lớn đối với sức khỏe cộng đồng. Tuy nhi&ecirc;n, việc ph&aacute;t hiện sớm v&agrave; theo d&otilde;i t&igrave;nh trạng bệnh th&ocirc;ng qua c&aacute;c x&eacute;t nghiệm y khoa hiện đại c&oacute; thể gi&uacute;p bệnh nh&acirc;n kiểm so&aacute;t hiệu quả v&agrave; ngăn ngừa c&aacute;c biến chứng nguy hiểm. Một trong những x&eacute;t nghiệm quan trọng trong việc ph&aacute;t hiện v&agrave; theo d&otilde;i bệnh tiểu đường l&agrave; x&eacute;t nghiệm HbA1c. Đ&acirc;y l&agrave; x&eacute;t nghiệm gi&uacute;p đ&aacute;nh gi&aacute; mức đường huyết trung b&igrave;nh trong v&ograve;ng ba th&aacute;ng qua, từ đ&oacute; gi&uacute;p b&aacute;c sĩ v&agrave; bệnh nh&acirc;n điều chỉnh chế độ ăn uống v&agrave; lối sống để kiểm so&aacute;t bệnh một c&aacute;ch hiệu quả.</p>
+<p dir="ltr" style="text-align: justify;">Chẳng hạn, đối với bệnh nh&acirc;n tiểu đường, nếu kết quả HbA1c cho thấy mức đường huyết kh&ocirc;ng ổn định, b&aacute;c sĩ c&oacute; thể điều chỉnh ph&aacute;c đồ điều trị hoặc y&ecirc;u cầu bệnh nh&acirc;n thay đổi chế độ ăn uống v&agrave; tăng cường tập thể dục. B&ecirc;n cạnh đ&oacute;, c&aacute;c x&eacute;t nghiệm kh&aacute;c như cholesterol, triglyceride, hay c&aacute;c x&eacute;t nghiệm chức năng gan, thận cũng rất quan trọng trong việc theo d&otilde;i c&aacute;c yếu tố nguy cơ, gi&uacute;p ph&aacute;t hiện sớm c&aacute;c vấn đề li&ecirc;n quan đến tim mạch v&agrave; gan. Điều n&agrave;y kh&ocirc;ng chỉ gi&uacute;p bệnh nh&acirc;n c&oacute; biện ph&aacute;p điều trị kịp thời m&agrave; c&ograve;n cải thiện chất lượng sống l&acirc;u d&agrave;i.</p>
+<p dir="ltr" style="text-align: justify;">C&aacute;c ph&ograve;ng x&eacute;t nghiệm y khoa hiện đại ng&agrave;y nay cung cấp c&aacute;c g&oacute;i x&eacute;t nghiệm định kỳ to&agrave;n diện, cho ph&eacute;p người bệnh ph&aacute;t hiện sớm c&aacute;c dấu hiệu của bệnh m&atilde;n t&iacute;nh, từ đ&oacute; c&oacute; thể điều trị kịp thời v&agrave; giảm thiểu c&aacute;c nguy cơ li&ecirc;n quan. Điều n&agrave;y chứng tỏ rằng, việc chăm s&oacute;c sức khỏe chủ động v&agrave; duy tr&igrave; c&aacute;c x&eacute;t nghiệm định kỳ kh&ocirc;ng chỉ gi&uacute;p bệnh nh&acirc;n ngăn ngừa biến chứng m&agrave; c&ograve;n k&eacute;o d&agrave;i tuổi thọ v&agrave; chất lượng cuộc sống.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/Cac_xet_nghiem_thuong_quy_duoc_thuc_hien_tai_benh_vien1_40cb2c044c_638693390661578420.webp',N'Y tế',0,N'' UNION ALL
+select 16,N'Xét nghiệm sinh học phân tử',N'<p dir="ltr" style="text-align: justify;"><strong id="docs-internal-guid-22551b79-7fff-ce6b-18fa-6d6adfa0a9e4">Xu hướng mới trong y học ch&iacute;nh x&aacute;c</strong><br><br>Trong những năm gần đ&acirc;y, x&eacute;t nghiệm sinh học ph&acirc;n tử đ&atilde; trở th&agrave;nh xu hướng mới trong y học ch&iacute;nh x&aacute;c, mở ra những cơ hội điều trị c&aacute; nh&acirc;n h&oacute;a cho nhiều bệnh l&yacute; phức tạp v&agrave; kh&oacute; chẩn đo&aacute;n. Sinh học ph&acirc;n tử sử dụng c&ocirc;ng nghệ hiện đại để ph&acirc;n t&iacute;ch ADN, ARN, v&agrave; c&aacute;c ph&acirc;n tử kh&aacute;c trong cơ thể, gi&uacute;p ph&aacute;t hiện c&aacute;c đột biến gene hoặc c&aacute;c yếu tố g&acirc;y bệnh tiềm ẩn. Điều n&agrave;y kh&ocirc;ng chỉ gi&uacute;p chẩn đo&aacute;n c&aacute;c bệnh l&yacute; di truyền m&agrave; c&ograve;n mở ra cơ hội điều trị hiệu quả cho c&aacute;c bệnh nh&acirc;n mắc bệnh ung thư hoặc c&aacute;c rối loạn miễn dịch.</p>
+<p dir="ltr" style="text-align: justify;">C&ocirc;ng nghệ x&eacute;t nghiệm sinh học ph&acirc;n tử cho ph&eacute;p x&aacute;c định ch&iacute;nh x&aacute;c c&aacute;c đột biến gene g&acirc;y bệnh, từ đ&oacute; b&aacute;c sĩ c&oacute; thể x&acirc;y dựng ph&aacute;c đồ điều trị c&aacute; nh&acirc;n h&oacute;a, gi&uacute;p n&acirc;ng cao tỷ lệ th&agrave;nh c&ocirc;ng trong điều trị ung thư. V&iacute; dụ, đối với c&aacute;c loại ung thư như ung thư v&uacute; hoặc ung thư đại tr&agrave;ng, x&eacute;t nghiệm sinh học ph&acirc;n tử c&oacute; thể x&aacute;c định c&aacute;c đột biến gene như BRCA1 v&agrave; BRCA2, từ đ&oacute; đưa ra c&aacute;c biện ph&aacute;p ph&ograve;ng ngừa hoặc điều trị th&iacute;ch hợp.</p>
+<p dir="ltr" style="text-align: justify;">Ngo&agrave;i ung thư, sinh học ph&acirc;n tử cũng c&oacute; ứng dụng trong việc chẩn đo&aacute;n v&agrave; điều trị c&aacute;c bệnh l&yacute; di truyền v&agrave; c&aacute;c bệnh tự miễn dịch. C&aacute;c x&eacute;t nghiệm sinh học ph&acirc;n tử gi&uacute;p ph&aacute;t hiện sớm c&aacute;c bệnh n&agrave;y, gi&uacute;p điều trị nhanh ch&oacute;ng v&agrave; giảm thiểu c&aacute;c biến chứng. Đặc biệt, trong c&aacute;c bệnh l&yacute; di truyền như bệnh Huntington hay bệnh Thalassemia, việc x&eacute;t nghiệm sớm kh&ocirc;ng chỉ gi&uacute;p ph&aacute;t hiện bệnh m&agrave; c&ograve;n gi&uacute;p gia đ&igrave;nh bệnh nh&acirc;n c&oacute; c&aacute;c biện ph&aacute;p chăm s&oacute;c sức khỏe ph&ugrave; hợp.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/20230411_xet-nghiem-sinh-hoc-phan-1_638693391243072590.png',N'Y tế',0,N'' UNION ALL
+select 17,N' Xét nghiệm sàng lọc trước sinh',N'<p dir="ltr" style="text-align: justify;"><strong id="docs-internal-guid-89a3da06-7fff-a760-886f-1e51e2d34dff">Bảo vệ sức khỏe mẹ v&agrave; b&eacute;</strong><br><br>X&eacute;t nghiệm s&agrave;ng lọc trước sinh đ&atilde; trở th&agrave;nh một phần kh&ocirc;ng thể thiếu trong chăm s&oacute;c sức khỏe thai kỳ, gi&uacute;p bảo vệ sức khỏe của mẹ v&agrave; b&eacute;. C&aacute;c x&eacute;t nghiệm như Double Test, Triple Test hay x&eacute;t nghiệm NIPT (Non-Invasive Prenatal Testing) gi&uacute;p ph&aacute;t hiện sớm c&aacute;c dị tật bẩm sinh hoặc bất thường nhiễm sắc thể, từ đ&oacute; giảm thiểu rủi ro cho thai nhi v&agrave; tạo điều kiện để gia đ&igrave;nh chuẩn bị t&acirc;m l&yacute; cho những t&igrave;nh huống c&oacute; thể xảy ra.</p>
+<p dir="ltr" style="text-align: justify;">Trong đ&oacute;, x&eacute;t nghiệm NIPT l&agrave; một trong những tiến bộ vượt bậc trong s&agrave;ng lọc trước sinh. Được thực hiện từ mẫu m&aacute;u của người mẹ, NIPT kh&ocirc;ng x&acirc;m lấn v&agrave; c&oacute; độ ch&iacute;nh x&aacute;c cao, gi&uacute;p ph&aacute;t hiện c&aacute;c bệnh l&yacute; nhiễm sắc thể như hội chứng Down, hội chứng Edwards, v&agrave; hội chứng Patau. C&aacute;c b&aacute;c sĩ sản khoa khuyến nghị c&aacute;c b&agrave; bầu thực hiện x&eacute;t nghiệm n&agrave;y ở tuần thứ 10 của thai kỳ, đặc biệt đối với những b&agrave; mẹ c&oacute; độ tuổi cao hoặc c&oacute; tiền sử gia đ&igrave;nh mắc c&aacute;c bệnh di truyền.</p>
+<p dir="ltr" style="text-align: justify;">B&ecirc;n cạnh việc ph&aacute;t hiện sớm c&aacute;c dị tật bẩm sinh, x&eacute;t nghiệm trước sinh cũng gi&uacute;p mẹ bầu theo d&otilde;i c&aacute;c yếu tố nguy cơ kh&aacute;c trong qu&aacute; tr&igrave;nh mang thai như bệnh tiểu đường thai kỳ, tiền sản giật hoặc c&aacute;c rối loạn chức năng tim mạch. C&aacute;c x&eacute;t nghiệm n&agrave;y kh&ocirc;ng chỉ gi&uacute;p bảo vệ sức khỏe của thai nhi m&agrave; c&ograve;n đảm bảo sự an to&agrave;n v&agrave; khỏe mạnh của mẹ trong suốt thai kỳ. Việc ph&aacute;t hiện sớm c&aacute;c vấn đề sẽ gi&uacute;p b&aacute;c sĩ đưa ra c&aacute;c phương &aacute;n điều trị, chăm s&oacute;c ph&ugrave; hợp v&agrave; giảm thiểu c&aacute;c biến chứng kh&ocirc;ng mong muốn trong qu&aacute; tr&igrave;nh sinh nở.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/double-test-2_638693391804602360.jpg',N'Mẹ và bé',0,N'' UNION ALL
+select 18,N'Tương lai của phòng xét nghiệm y khoa tại Việt Nam',N'<p dir="ltr" style="text-align: justify;">Ng&agrave;nh x&eacute;t nghiệm y khoa tại Việt Nam đang bước v&agrave;o một giai đoạn ph&aacute;t triển mạnh mẽ nhờ sự đầu tư v&agrave;o c&ocirc;ng nghệ hiện đại v&agrave; nguồn nh&acirc;n lực chất lượng cao. C&aacute;c ph&ograve;ng x&eacute;t nghiệm ở Việt Nam đang ng&agrave;y c&agrave;ng được trang bị những thiết bị ti&ecirc;n tiến, kết hợp với tr&iacute; tuệ nh&acirc;n tạo (AI) v&agrave; dữ liệu lớn (Big Data) để cải thiện độ ch&iacute;nh x&aacute;c của c&aacute;c kết quả x&eacute;t nghiệm, đồng thời n&acirc;ng cao hiệu quả chẩn đo&aacute;n v&agrave; điều trị.</p>
+<p dir="ltr" style="text-align: justify;">C&ocirc;ng nghệ AI gi&uacute;p ph&acirc;n t&iacute;ch v&agrave; xử l&yacute; lượng dữ liệu x&eacute;t nghiệm khổng lồ trong thời gian ngắn, gi&uacute;p b&aacute;c sĩ đưa ra kết luận ch&iacute;nh x&aacute;c v&agrave; kịp thời. V&iacute; dụ, c&aacute;c phần mềm AI c&oacute; thể ph&aacute;t hiện c&aacute;c dấu hiệu bất thường trong h&igrave;nh ảnh x&eacute;t nghiệm như X-quang hoặc MRI, gi&uacute;p b&aacute;c sĩ ph&aacute;t hiện sớm c&aacute;c bệnh l&yacute; m&agrave; kh&ocirc;ng cần phải l&agrave;m x&eacute;t nghiệm th&ecirc;m. B&ecirc;n cạnh đ&oacute;, việc ứng dụng dữ liệu lớn gi&uacute;p theo d&otilde;i v&agrave; ph&acirc;n t&iacute;ch c&aacute;c xu hướng sức khỏe cộng đồng, từ đ&oacute; đưa ra c&aacute;c biện ph&aacute;p ph&ograve;ng ngừa hiệu quả.</p>
+<p dir="ltr" style="text-align: justify;">Đặc biệt, nhiều trung t&acirc;m x&eacute;t nghiệm y khoa tại Việt Nam cũng đang hợp t&aacute;c với c&aacute;c tổ chức quốc tế để cập nhật c&aacute;c ti&ecirc;u chuẩn quốc tế, nhằm cải thiện chất lượng dịch vụ. C&aacute;c ph&ograve;ng x&eacute;t nghiệm đạt chuẩn quốc tế như ISO 15189, sẽ đảm bảo cho bệnh nh&acirc;n những kết quả x&eacute;t nghiệm ch&iacute;nh x&aacute;c v&agrave; đ&aacute;ng tin cậy. Điều n&agrave;y mở ra cơ hội lớn cho ng&agrave;nh y tế Việt Nam trong việc cung cấp dịch vụ y khoa kh&ocirc;ng chỉ trong nước m&agrave; c&ograve;n ra thế giới.</p>
+<p dir="ltr" style="text-align: justify;">Ngo&agrave;i ra, xu hướng y tế số đang ng&agrave;y c&agrave;ng ph&aacute;t triển, với c&aacute;c ứng dụng di động v&agrave; dịch vụ trực tuyến gi&uacute;p bệnh nh&acirc;n dễ d&agrave;ng tiếp cận kết quả x&eacute;t nghiệm mọi l&uacute;c, mọi nơi. Nhờ đ&oacute;, việc chăm s&oacute;c sức khỏe trở n&ecirc;n thuận tiện v&agrave; hiệu quả hơn bao giờ hết. Với những bước tiến vượt bậc trong c&ocirc;ng nghệ v&agrave; cơ sở hạ tầng, tương lai ng&agrave;nh x&eacute;t nghiệm y khoa tại Việt Nam hứa hẹn sẽ ng&agrave;y c&agrave;ng ph&aacute;t triển mạnh mẽ, n&acirc;ng cao chất lượng chăm s&oacute;c sức khỏe cho cộng đồng.</p>
+<p style="text-align: justify;">&nbsp;</p>','2024-01-01',N'/images/DSC_4586-1024x682_638693392229202500.jpg',N'Y tế',0,N'';
+
+set identity_insert [#tempBlogs] off;
+
+
+
+
+
+
+
+--create table [#tempService] (
+--[Id] [int] identity,
+--[ServiceName] [nvarchar] (255) NULL,
+--[ServiceGroup] [nvarchar] (255) NULL,
+--[ServiceUnit] [nvarchar] (255) NULL,
+--[CreatedAt] [date] NULL);
+
+
+
+set identity_insert [#tempService] on;
+
+
+insert [#tempService] ([Id],[ServiceName],[ServiceGroup],[ServiceUnit],[CreatedAt])
+select 1,N'Co cục máu đông',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 2,N'C.B.C(NGFL)',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 3,N'Hồng cầu lưới',N'Huyết Học',N'%','2024-12-09' UNION ALL
+select 4,N'Nhóm máu (GS)',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 5,N'Rhesus',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 6,N'ESR(VS) 1h',N'Huyết Học',N'mm','2024-12-09' UNION ALL
+select 7,N'ERS(VS) 2h',N'Huyết Học',N'mm','2024-12-09' UNION ALL
+select 8,N'Co cục máu đông',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 9,N'TS',N'Huyết Học',N'min','2024-12-09' UNION ALL
+select 10,N'TC',N'Huyết Học',N'min','2024-12-09' UNION ALL
+select 11,N'TQ',N'Huyết Học',N'giây','2024-12-09' UNION ALL
+select 12,N'TCK',N'Huyết Học',N'giây','2024-12-09' UNION ALL
+select 13,N'Fibrinogen',N'Huyết Học',N'mg/dL','2024-12-09' UNION ALL
+select 14,N'INR',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 15,N'Protein C',N'Huyết Học',N'%','2024-12-09' UNION ALL
+select 16,N'Anti Thrombin III',N'Đông Máu',N'','2024-12-09' UNION ALL
+select 17,N'Nhóm máu ABO',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 18,N'Điện Di Hemoglobin',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 19,N'KST Sốt rét (Malaria)',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 20,N'G6PD',N'Huyết Học',N'U/gHb','2024-12-09' UNION ALL
+select 21,N'Malaria Ag',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 22,N'LEE Cell',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 23,N'Đếm tiểu cầu (Plt)',N'Huyết Học',N'K/µL','2024-12-09' UNION ALL
+select 24,N'Peripheral Blood Smear',N'Huyết Học',N'','2024-12-09' UNION ALL
+select 25,N'PCR Herpes Simplex Virus (HSV DNA 1,2 Realtime)',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 26,N'Áp lực thẩm thấu máu',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 27,N'Áp lực thẩm thấu nước tiểu',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 28,N'LKM-1 anti (Liver Kidney Microsomal)',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 29,N'LKM-1 IFT',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 30,N'SLA/LP anti (Soluble liver antigen/ Liver Pancreas)',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 31,N'SMA IFT',N'Sinh Hoá - Miễn Dịch',N'','2024-12-09' UNION ALL
+select 32,N'Glucose sau ăn 1h',N'Sinh Hoá',N'mg/dl','2024-12-09' UNION ALL
+select 33,N'Glucose',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 34,N'Glucose sau ăn 2h',N'Sinh Hoá',N'mg/dl','2024-12-09' UNION ALL
+select 35,N'Glucose bất kỳ',N'Sinh Hoá',N'','2024-12-09' UNION ALL
+select 36,N'Glucose sau ăn',N'Sinh Hoá - Miễn Dịch',N'mmol/L','2024-12-09' UNION ALL
+select 37,N'HbA1c%',N'Sinh Hoá',N'%','2024-12-09' UNION ALL
+select 38,N'NP Dung nạp đường 75g Glucose - OGTT (Uống 75g Glucose)',N'Sinh Hoá',N'','2024-12-09' UNION ALL
+select 39,N'Urea',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 40,N'BUN',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 41,N'Creatinine',N'Sinh Hoá',N'µmol/L','2024-12-09' UNION ALL
+select 42,N'Acid Uric',N'Sinh Hoá',N'µmol/L','2024-12-09' UNION ALL
+select 43,N'Bilirubin Total',N'Sinh Hoá',N'µmol/L','2024-12-09' UNION ALL
+select 44,N'Bilirubin Direct',N'Sinh Hoá',N'µmol/L','2024-12-09' UNION ALL
+select 45,N'Bilirubin Indirect',N'Sinh Hoá',N'µmol/L','2024-12-09' UNION ALL
+select 46,N'ALT (SGPT)',N'Sinh Hoá',N'U/L','2024-12-09' UNION ALL
+select 47,N'AST (SGOT)',N'Sinh Hoá',N'U/L','2024-12-09' UNION ALL
+select 48,N'ALP',N'Sinh Hoá',N'U/L','2024-12-09' UNION ALL
+select 49,N'GGT',N'Sinh Hoá',N'U/L','2024-12-09' UNION ALL
+select 50,N'Cholesterol Total',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 51,N'Cholesterol HDL',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 52,N'Cholesterol LDL',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 53,N'Triglyceride',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 54,N'Ure',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 55,N'Glucometer',N'Sinh Hoá',N'mg/dl','2024-12-09' UNION ALL
+select 56,N'LDL-C',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 57,N'HDL-C',N'Sinh Hoá',N'mmol/L','2024-12-09' UNION ALL
+select 58,N'Troponin T',N'Sinh Hoá',N'ng/mL','2024-12-09' UNION ALL
+select 59,N'CK-MB',N'Sinh Hoá',N'U/L','2024-12-09' UNION ALL
+select 60,N'Myoglobin',N'Sinh Hoá',N'ng/mL','2024-12-09' UNION ALL
+select 61,N'Creatine Kinase',N'Sinh Hoá',N'U/L','2024-12-09';
+
+set identity_insert [#tempService] off;
