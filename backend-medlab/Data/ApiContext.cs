@@ -13,6 +13,12 @@ namespace api_sixOs.Data
         
         public DbSet<Service> Service { get; set; }
         
+        public DbSet<TestingPackage> TestingPackage { get; set; }
+        
+        public DbSet<Reason> Reason { get; set; }
+        
+        public DbSet<Purpose> Purpose { get; set; }
+        
         public ApiContext(DbContextOptions<ApiContext> options)
             :base(options)
         { 

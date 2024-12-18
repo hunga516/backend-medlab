@@ -1,10 +1,22 @@
+using System.Text.Json.Serialization;
+
 public class Booking
 {
+    [JsonPropertyName("id")]
     public int Id { get; set; }
-    public string? Name { get; set; }       // Nullable Name
-    public string? Phone { get; set; }      // Nullable Phone
-    public DateOnly? Dob { get; set; }      // Nullable Date of Birth
-    public string? Address { get; set; }    // Nullable Address
-    public string? Department { get; set; } // Nullable Department
-    public DateOnly? BookingDate { get; set; } // Nullable BookingDate
+
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
+
+    [JsonPropertyName("phone")]
+    public string Phone { get; set; }
+
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
+
+    [JsonPropertyName("bookingDate")]
+    public DateOnly? BookingDate { get; set; }
+    
+    [JsonPropertyName("status")]
+    public string? Status { get; set; } = "notSent";
 }
