@@ -13,9 +13,6 @@ public class Booking
 
     [JsonPropertyName("email")]
     public string Email { get; set; }
-
-    [JsonPropertyName("bookingDate")]
-    public DateOnly? BookingDate { get; set; }
     
     [JsonPropertyName("status")]
     public string? Status { get; set; } = "notSent";

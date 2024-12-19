@@ -37,14 +37,13 @@ namespace api_sixOs.Controllers
             var body = $@"
     <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);'>
         <div style='text-align: center; background-color: #1e88e5; padding: 10px 0; border-top-left-radius: 8px; border-top-right-radius: 8px;'>
-            <img src='cid:companylogo' alt='Medlab Logo' style='max-width: 120px; height: auto;' />
+            Medlad Vĩnh Viễn
         </div>
         <div style='padding: 20px;'>
             <h2 style='color: #1e88e5; text-align: center;'>Chào {booking.Name},</h2>
-            <p style='font-size: 16px;'>Cảm ơn bạn đã đặt lịch tại <strong>Medlab</strong>. Chúng tôi đã nhận được thông tin của bạn.</p>
+            <p style='font-size: 16px;'>Cảm ơn bạn đã gửi thông tin tại <strong>Medlab</strong>. Chúng tôi đã nhận được thông tin của bạn.</p>
             <ul style='list-style: none; padding: 0; margin: 0;'>
-                <li style='margin-bottom: 10px;'><strong>Ngày đặt lịch:</strong> {booking.BookingDate?.ToString("dd/MM/yyyy")}</li>
-                <li style='margin-bottom: 10px;'><strong>Email liên hệ:</strong> {booking.Email}</li>
+                <li style='margin-bottom: 10px;'><strong>Số điện thoại của bạn :</strong> {booking.Phone}</li>
             </ul>
             <p style='font-size: 16px;'>Chúng tôi sẽ liên hệ lại với bạn trong thời gian sớm nhất.</p>
         </div>

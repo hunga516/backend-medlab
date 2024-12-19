@@ -44,7 +44,6 @@ namespace api_sixOs.Controllers
         }
         
         // Lấy booking theo trạng thái
-        // Lấy booking theo trạng thái
         [HttpGet("{status}")]
         public IActionResult GetByStatus(string status)
         {
